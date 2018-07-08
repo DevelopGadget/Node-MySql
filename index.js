@@ -1,4 +1,5 @@
 'use strict'
+
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
@@ -12,7 +13,7 @@ app.use(morgan('dev'));
 app.use(body.json());
 app.use(body.urlencoded({ extended: false }));
 
-require('./Routes/Routes')(app);
+require('./Routes/Router')(app);
 
 //Listen
 app.listen(app.get('port'), () => {
