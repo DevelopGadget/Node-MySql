@@ -26,4 +26,18 @@ function Post(req, res) {
   res.status(200).send('Hola soy post');
 }
 
-module.exports = { Get, Put, Delete, Post }
+function GetId(req, res){
+    Conexion.Connection.connect(err => {
+    Conectado = err ? 
+    Conexion.Connection.query('SELECT * FROM Usuarios WHERE Email = ' + Conexion.Connection.escape(req.params.Id), (err, result) =>{
+      if(err){
+        res.status(400).send(err);
+      }else{
+        res.status(200).send(result);
+      } 
+    })
+    : res.status(400).send('No esta conectado');
+  });
+}
+
+module.exports = { Get, Put, Delete, Post, GetId }
