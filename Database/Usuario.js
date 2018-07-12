@@ -1,24 +1,29 @@
 const Conexion = require('./Conexion');
-var Conectado = true;
 
-Conexion.Connection.connect(err => {
-  Conectado = err ? false : true;
-});
-
-function Get (req, res) {
-  res.status(200).send('Hola soy get');
+function Get(req, res) {
+  Conexion.Connection.connect(err => {
+    Conectado = err ? 
+    Conexion.Connection.query('SELECT * FROM Usuarios', (err, result) =>{
+      if(err){
+        res.status(400).send(err);
+      }else{
+        res.status(200).send(result);
+      } 
+    })
+    : res.status(400).send('No esta conectado');
+  });
 }
 
-function Put (req, res) {
+function Put(req, res) {
   res.status(200).send('Hola soy put');
 }
 
-function Delete (req, res) {
+function Delete(req, res) {
   res.status(200).send('Hola soy delete');
 }
 
-function Post (req, res) {
+function Post(req, res) {
   res.status(200).send('Hola soy post');
 }
 
-module.exports = {Get, Put, Delete, Post}
+module.exports = { Get, Put, Delete, Post }

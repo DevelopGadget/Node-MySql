@@ -1,10 +1,10 @@
 const MySql = require('mysql');
 
 const Connection = MySql.createConnection({
-  host: 'localhost',
-  user: 'id6427175_root',
-  password: '12345',
-  database: 'id6427175_usuarios'
+  host: 'sql9.freemysqlhosting.net',
+  user: 'sql9247414',
+  password: 'MGE147UnMa',
+  database: 'sql9247414'
 });
 
 module.exports = {Connection}
