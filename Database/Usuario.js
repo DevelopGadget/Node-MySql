@@ -15,17 +15,27 @@ function Get(req, res) {
 }
 
 function Put(req, res) {
-  res.status(200).send('Hola soy put');
+  Conexion.Connection.connect(err => {
+    Conectado = err ?
+      Conexion.Connection.query('UPDATE Usuarios SET Image = ?, Nombre = ?, Edad = ? WHERE Email = ?', [req.body.Image, req.body.Nombre, req.body.Edad, req.params.Id], (err, result) => {
+        if (err) {
+          res.status(400).send(err);
+        } else {
+          res.status(200).send(result);
+        }
+      })
+      : res.status(400).send('No esta conectado');
+  });
 }
 
 function Delete(req, res) {
   Conexion.Connection.connect(err => {
     Conectado = err ?
-      Conexion.Connection.query('DELETE FROM Usuarios WHERE Email = ' + Conexion.Connection.escape(req.params.Id), (err, result) => {
+      Conexion.Connection.query('DELETE FROM Usuarios WHERE Email = ?', [req.params.Id], (err, result) => {
         if (err) {
           res.status(400).send(err);
         } else {
-          res.status(200).send("Borrado");
+          res.status(200).send(result);
         }
       })
       : res.status(400).send('No esta conectado');
@@ -39,7 +49,7 @@ function Post(req, res) {
         if (err) {
           res.status(400).send(err);
         } else {
-          res.status(200).send('Insertado');
+          res.status(200).send(result);
         }
       })
       : res.status(400).send('No esta conectado');
@@ -49,7 +59,7 @@ function Post(req, res) {
 function GetId(req, res) {
   Conexion.Connection.connect(err => {
     Conectado = err ?
-      Conexion.Connection.query('SELECT * FROM Usuarios WHERE Email = ' + Conexion.Connection.escape(req.params.Id), (err, result) => {
+      Conexion.Connection.query('SELECT * FROM Usuarios WHERE Email = ?', [req.params.Id], (err, result) => {
         if (err) {
           res.status(400).send(err);
         } else {
