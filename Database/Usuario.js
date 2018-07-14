@@ -19,7 +19,17 @@ function Put(req, res) {
 }
 
 function Delete(req, res) {
-  res.status(200).send('Hola soy delete');
+  Conexion.Connection.connect(err => {
+    Conectado = err ?
+      Conexion.Connection.query('DELETE FROM Usuarios WHERE Email = ' + Conexion.Connection.escape(req.params.Id), (err, result) => {
+        if (err) {
+          res.status(400).send(err);
+        } else {
+          res.status(200).send("Borrado");
+        }
+      })
+      : res.status(400).send('No esta conectado');
+  });
 }
 
 function Post(req, res) {
